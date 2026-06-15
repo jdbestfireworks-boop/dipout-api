@@ -7,10 +7,21 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// ROUTES
+const authRoutes = require('./routes/auth');
+const tripRoutes = require('./routes/trips');
+const driverRoutes = require('./routes/drivers');
+
+app.use('/auth', authRoutes);
+app.use('/trips', tripRoutes);
+app.use('/drivers', driverRoutes);
+
+// ROOT
 app.get('/', (req, res) => {
   res.send('DipOut backend is running');
 });
 
+// HEALTH CHECK
 app.get('/health', async (req, res) => {
   try {
     const result = await db.query('SELECT NOW()');
